@@ -289,6 +289,7 @@ form button {
   color: white;
   border: none;
   transition: background-color 0.3s;
+  cursor: pointer;
 }
 
 form button:hover {
@@ -305,7 +306,9 @@ table {
   overflow: hidden;
 }
 
-table, th, td {
+table,
+th,
+td {
   border: 1px solid #ddd;
 }
 
@@ -314,7 +317,8 @@ th {
   color: white;
 }
 
-th, td {
+th,
+td {
   padding: 12px;
   text-align: left;
 }
@@ -328,3 +332,17 @@ ul {
   border-radius: 6px;
 }
 
+/* Edit button styling */
+.editBtn {
+  background-color: #0066cc;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.editBtn:hover {
+  background-color: #004080;
+}
