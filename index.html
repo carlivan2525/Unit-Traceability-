@@ -5,19 +5,25 @@
   <title>Login | Unit Traceability System</title>
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body id="index-page">
   <header>Unit Traceability System - MkFF LASERTEKNIQUE</header>
+
   <div class="container">
     <h2>Login</h2>
-    <label>Role:</label>
+
+    <label for="role">Role:</label>
     <select id="role">
       <option value="">-- Choose --</option>
       <option value="operator">Operator</option>
       <option value="admin">Admin</option>
     </select>
 
-    <input type="email" id="email" placeholder="Email">
-    <input type="password" id="password" placeholder="Password">
+    <label for="email">Email:</label>
+    <input type="email" id="email" placeholder="Enter your email" required>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" placeholder="Enter your password" required>
+
     <button onclick="login()">Login</button>
     <p id="error-message" class="error-message"></p>
   </div>
