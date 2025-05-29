@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Station 1 - PCB Pairing</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body id="station-page">
   <header>
@@ -17,14 +17,15 @@
     <div class="card">
       <h2>Input Unit Information</h2>
       <form id="unitForm">
-        <input type="text" id="unitId" placeholder="Unit ID" required>
-        <input type="text" id="model" placeholder="Model" required>
+        <input type="text" id="unitId" placeholder="Unit ID" required />
+        <input type="text" id="model" placeholder="Model" required />
         <select id="status">
           <option value="In Progress">In Progress</option>
           <option value="Done">Done</option>
         </select>
-        <input type="text" id="remarks" placeholder="Remarks (optional)">
+        <input type="text" id="remarks" placeholder="Remarks (optional)" />
         <button type="submit">Submit Unit</button>
+        <button type="button" id="cancelEditBtn" style="display:none; margin-top:10px;">Cancel Edit</button>
       </form>
     </div>
 
@@ -37,6 +38,7 @@
             <th>Model</th>
             <th>Status</th>
             <th>Remarks</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody id="unitTableBody"></tbody>
@@ -58,41 +60,115 @@
   </div>
 
   <script>
-    const unitHistory = [];
+    let unitHistory = [];
     const accountHistory = document.getElementById('accountHistory');
+    const unitForm = document.getElementById('unitForm');
+    const tbody = document.getElementById('unitTableBody');
+    const historyList = document.getElementById('unitHistory');
+    const cancelEditBtn = document.getElementById('cancelEditBtn');
 
-    document.getElementById("unitForm").addEventListener("submit", function(event) {
+    let editIndex = -1; // Tracks if we are editing an existing row
+
+    unitForm.addEventListener('submit', function (event) {
       event.preventDefault();
 
-      const unitId = document.getElementById("unitId").value;
-      const model = document.getElementById("model").value;
-      const status = document.getElementById("status").value;
-      const remarks = document.getElementById("remarks").value;
+      const unitId = document.getElementById('unitId').value.trim();
+      const model = document.getElementById('model').value.trim();
+      const status = document.getElementById('status').value;
+      const remarks = document.getElementById('remarks').value.trim();
 
-      const tbody = document.getElementById("unitTableBody");
-      const row = document.createElement("tr");
-      row.innerHTML = `<td>${unitId}</td><td>${model}</td><td>${status}</td><td>${remarks}</td>`;
+      if (editIndex === -1) {
+        // Add new unit row
+        addUnitRow(unitId, model, status, remarks);
+
+        // Add to history
+        unitHistory.push(
+          `Unit ${unitId} (${model}) - ${status}${remarks ? ` | Remarks: ${remarks}` : ''}`
+        );
+        updateUnitHistory();
+
+        // Add to account history log
+        addAccountLog(`Submitted Unit ${unitId} - ${status}${remarks ? ` - ${remarks}` : ''}`);
+      } else {
+        // Update existing row
+        updateUnitRow(editIndex, unitId, model, status, remarks);
+
+        // Update history entry
+        unitHistory[editIndex] = `Unit ${unitId} (${model}) - ${status}${remarks ? ` | Remarks: ${remarks}` : ''}`;
+        updateUnitHistory();
+
+        addAccountLog(`Edited Unit ${unitId} - ${status}${remarks ? ` - ${remarks}` : ''}`);
+
+        editIndex = -1;
+        cancelEditBtn.style.display = 'none';
+        unitForm.querySelector('button[type="submit"]').textContent = 'Submit Unit';
+      }
+
+      unitForm.reset();
+    });
+
+    function addUnitRow(unitId, model, status, remarks) {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${unitId}</td>
+        <td>${model}</td>
+        <td>${status}</td>
+        <td>${remarks}</td>
+        <td>
+          <button class="editBtn">Edit</button>
+        </td>
+      `;
       tbody.appendChild(row);
 
-      unitHistory.push(`Unit ${unitId} (${model}) - ${status}${remarks ? ` | Remarks: ${remarks}` : ''}`);
-      updateUnitHistory();
+      // Attach event listener to the edit button
+      row.querySelector('.editBtn').addEventListener('click', () => {
+        loadRowToForm(row);
+      });
+    }
 
-      const timestamp = new Date().toLocaleString();
-      const activity = document.createElement('li');
-      activity.textContent = `Submitted Unit ${unitId} - ${status}${remarks ? ` - ${remarks}` : ''} @ ${timestamp}`;
-      accountHistory.appendChild(activity);
+    function updateUnitRow(index, unitId, model, status, remarks) {
+      const row = tbody.rows[index];
+      if (!row) return;
 
-      this.reset();
+      row.cells[0].textContent = unitId;
+      row.cells[1].textContent = model;
+      row.cells[2].textContent = status;
+      row.cells[3].textContent = remarks;
+    }
+
+    function loadRowToForm(row) {
+      document.getElementById('unitId').value = row.cells[0].textContent;
+      document.getElementById('model').value = row.cells[1].textContent;
+      document.getElementById('status').value = row.cells[2].textContent;
+      document.getElementById('remarks').value = row.cells[3].textContent;
+
+      editIndex = Array.from(tbody.rows).indexOf(row);
+
+      cancelEditBtn.style.display = 'inline-block';
+      unitForm.querySelector('button[type="submit"]').textContent = 'Save Changes';
+    }
+
+    cancelEditBtn.addEventListener('click', () => {
+      unitForm.reset();
+      editIndex = -1;
+      cancelEditBtn.style.display = 'none';
+      unitForm.querySelector('button[type="submit"]').textContent = 'Submit Unit';
     });
 
     function updateUnitHistory() {
-      const historyList = document.getElementById('unitHistory');
       historyList.innerHTML = '';
-      unitHistory.forEach(unit => {
+      unitHistory.forEach((unit) => {
         const li = document.createElement('li');
         li.textContent = unit;
         historyList.appendChild(li);
       });
+    }
+
+    function addAccountLog(message) {
+      const timestamp = new Date().toLocaleString();
+      const activity = document.createElement('li');
+      activity.textContent = `${message} @ ${timestamp}`;
+      accountHistory.appendChild(activity);
     }
 
     function logout() {
