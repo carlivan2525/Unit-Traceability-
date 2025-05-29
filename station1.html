@@ -5,42 +5,52 @@
   <title>Station 1 - PCB Pairing</title>
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-  <header>Station 1 - PCB Pairing (Operator)</header>
+<body id="station-page">
+  <header>
+    <div class="header-content">
+      <h1>Station 1 - PCB Pairing (Operator)</h1>
+      <button onclick="logout()">Logout</button>
+    </div>
+  </header>
+
   <div class="container">
-    <h2>Input Unit Information</h2>
-    <form id="unitForm">
-      <input type="text" id="unitId" placeholder="Unit ID" required>
-      <input type="text" id="model" placeholder="Model" required>
-      <select id="status">
-        <option value="In Progress">In Progress</option>
-        <option value="Done">Done</option>
-      </select>
-      <button type="submit">Submit Unit</button>
-    </form>
+    <div class="card">
+      <h2>Input Unit Information</h2>
+      <form id="unitForm">
+        <input type="text" id="unitId" placeholder="Unit ID" required>
+        <input type="text" id="model" placeholder="Model" required>
+        <select id="status">
+          <option value="In Progress">In Progress</option>
+          <option value="Done">Done</option>
+        </select>
+        <input type="text" id="remarks" placeholder="Remarks (optional)">
+        <button type="submit">Submit Unit</button>
+      </form>
+    </div>
 
-    <h3>Submitted Units</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Unit ID</th>
-          <th>Model</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody id="unitTableBody"></tbody>
-    </table>
+    <div class="card">
+      <h3>📋 Submitted Units</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Unit ID</th>
+            <th>Model</th>
+            <th>Status</th>
+            <th>Remarks</th>
+          </tr>
+        </thead>
+        <tbody id="unitTableBody"></tbody>
+      </table>
+    </div>
 
-    <div class="history-box">
+    <div class="card">
       <h3>🔁 Unit History</h3>
-      <p>Operators from all stations can view this history.</p>
       <ul id="unitHistory"></ul>
     </div>
 
-    <div class="history-box">
+    <div class="card">
       <h3>👤 Account History</h3>
       <p>Logged in as: <strong>Operator</strong> (Station 1)</p>
-      <p>Activity Log:</p>
       <ul id="accountHistory">
         <li>Logged in</li>
       </ul>
@@ -57,20 +67,19 @@
       const unitId = document.getElementById("unitId").value;
       const model = document.getElementById("model").value;
       const status = document.getElementById("status").value;
+      const remarks = document.getElementById("remarks").value;
 
       const tbody = document.getElementById("unitTableBody");
       const row = document.createElement("tr");
-      row.innerHTML = `<td>${unitId}</td><td>${model}</td><td>${status}</td>`;
+      row.innerHTML = `<td>${unitId}</td><td>${model}</td><td>${status}</td><td>${remarks}</td>`;
       tbody.appendChild(row);
 
-      // Add to unit history
-      unitHistory.push(`Unit ${unitId} (${model}) - ${status}`);
+      unitHistory.push(`Unit ${unitId} (${model}) - ${status}${remarks ? ` | Remarks: ${remarks}` : ''}`);
       updateUnitHistory();
 
-      // Add to account activity
       const timestamp = new Date().toLocaleString();
       const activity = document.createElement('li');
-      activity.textContent = `Submitted Unit ${unitId} - ${status} @ ${timestamp}`;
+      activity.textContent = `Submitted Unit ${unitId} - ${status}${remarks ? ` - ${remarks}` : ''} @ ${timestamp}`;
       accountHistory.appendChild(activity);
 
       this.reset();
@@ -84,6 +93,10 @@
         li.textContent = unit;
         historyList.appendChild(li);
       });
+    }
+
+    function logout() {
+      window.location.href = 'index.html';
     }
   </script>
 </body>
