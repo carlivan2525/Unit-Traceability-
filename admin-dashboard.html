@@ -5,21 +5,98 @@
   <title>Admin Dashboard</title>
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-  <header>Admin Dashboard - All Stations Overview</header>
+<body id="admin-dashboard">
+  <header>
+    Admin Dashboard - All Stations Overview
+    <button onclick="logout()" class="logout-btn">Logout</button>
+  </header>
+  
   <div class="container">
     <h2>Station Overview</h2>
 
-    <div class="station">
-      <h3>Station 1 - PCB Pairing</h3>
-      <p>Status: <span style="color: green;">Active</span></p>
-      <p>Unit history and progress will appear here once backend integration is complete.</p>
-    </div>
+    <div class="stations-grid">
+      <div class="station-box active">
+        <h3>Station 1 - PCB Pairing</h3>
+        <p>Status: <span class="status-active">Active</span></p>
+      </div>
 
-    <div class="station inactive">
-      <h3>Stations 2 to 15</h3>
-      <p>Status: <span style="color: gray;">Pending Development</span></p>
+      <div class="station-box active">
+        <h3>Station 2 - Integrated Board Test</h3>
+        <p>Status: <span class="status-active">Active</span></p>
+      </div>
+
+      <div class="station-box active">
+        <h3>Station 3 - Main Board Conformal Coating</h3>
+        <p>Status: <span class="status-active">Active</span></p>
+      </div>
+
+      <div class="station-box active">
+        <h3>Station 4 - RTV Application</h3>
+        <p>Status: <span class="status-active">Active</span></p>
+      </div>
+
+      <div class="station-box active">
+        <h3>Station 5 - Casing/Harnessing</h3>
+        <p>Status: <span class="status-active">Active</span></p>
+      </div>
+
+      <div class="station-box active">
+        <h3>Station 6 - Complete Unit Test/Calibration</h3>
+        <p>Status: <span class="status-active">Active</span></p>
+      </div>
+
+        <div class="station-box inactive">
+        <h3>Station 7 - Pre BI Hi-Pot Test</h3>
+        <p>Status: <span class="status-inactive">Offline</span></p>
+      </div>
+
+
+      <div class="station-box inactive">
+        <h3>Station 8 - Burn-In Testing</h3>
+        <p>Status: <span class="status-inactive">Offline</span></p>
+      </div>
+
+      <div class="station-box active">
+        <h3>Station 9 - Sealing</h3>
+        <p>Status: <span class="status-active">Active</span></p>
+      </div>
+
+      <div class="station-box active">
+        <h3>Station 10 - Post BI Hi-Pot Test</h3>
+        <p>Status: <span class="status-active">Active</span></p>
+      </div>
+
+      <div class="station-box active">
+        <h3>Station 11 - Final Functional/Connectivity Test</h3>
+        <p>Status: <span class="status-active">Active</span></p>
+      </div>
+
+      <div class="station-box active">
+        <h3>Station 12 - Label Sticker Attachment</h3>
+        <p>Status: <span class="status-active">Active</span></p>
+      </div>
+
+      <div class="station-box active">
+        <h3>Station 13 - FVI</h3>
+        <p>Status: <span class="status-active">Active</span></p>
+      </div>
+
+      <div class="station-box active">
+        <h3>Station 14 - Packing</h3>
+        <p>Status: <span class="status-active">Active</span></p>
+      </div>
+
+      <div class="station-box active">
+        <h3>Station 15 - QC Stamping</h3>
+        <p>Status: <span class="status-active">Active</span></p>
+      </div>
     </div>
   </div>
+
+  <script>
+    function logout() {
+      window.location.href = 'index.html'; // redirect to login page on logout
+    }
+  </script>
 </body>
 </html>
