@@ -24,7 +24,7 @@
     <label for="password">Password:</label>
     <input type="password" id="password" placeholder="Enter your password" required>
 
-    <button onclick="login()">Login</button>
+    <button onclick="firebaseLogin()">Login</button>
     <p id="error-message" class="error-message"></p>
   </div>
 
@@ -49,3 +49,47 @@
   </script>
 </body>
 </html>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyD7ZCORab9QsbAKaCUJjND8ZWRy4AbZ8zc",
+    authDomain: "capstone-fb0db.firebaseapp.com",
+    projectId: "capstone-fb0db",
+    storageBucket: "capstone-fb0db.firebasestorage.app",
+    messagingSenderId: "1022355968669",
+    appId: "1:1022355968669:web:0b1992d0a2f65d25a3ba74",
+    measurementId: "G-WYS1XZMJGD"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  window.firebaseLogin = function login() {
+    const role = document.getElementById('role').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const errorMessage = document.getElementById('error-message');
+
+    if (!role || !email || !password) {
+      errorMessage.textContent = "All fields are required.";
+      return;
+    }
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        if (role === "admin" && email === "admin@mkff.com") {
+          window.location.href = "admin-dashboard.html";
+        } else if (role === "operator" && email === "operator@mkff.com") {
+          window.location.href = "station1.html";
+        } else {
+          errorMessage.textContent = "Incorrect role for this email.";
+        }
+      })
+      .catch((error) => {
+        errorMessage.textContent = "Login failed: " + error.message;
+      });
+  };
+</script>
