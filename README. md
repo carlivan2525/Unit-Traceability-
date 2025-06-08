@@ -3,7 +3,7 @@
 1. Project Overview
 A web-based traceability system for PCB pairing (Station 1), with two user roles:
 
--Operator – inputs and edits unit data.
+-Operator – inputs and edits unit data. (dashboard still in development).
 
 -Admin – manages/oversees operations (dashboard still in development).
 
@@ -13,6 +13,7 @@ Data and authentication are handled by Firebase; app is deployed on Vercel.
 | ------------ | ------------------- | ------------- |
 | **Admin**    | `admin@mkff.com`    | `admin123`    |
 | **Operator** | `operator@mkff.com` | `operator123` |
+
 These are stored in Firebase Authentication and should be manually created in your Firebase Console → Authentication → Users.
 
 🔑 Features by Page
