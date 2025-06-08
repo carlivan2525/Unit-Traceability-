@@ -189,7 +189,63 @@
   font-weight: bold;
 }
 
+/* --- Modal Styles --- */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4); /* semi-transparent background */
+}
 
+.modal-content {
+  background-color: #ffffff;
+  margin: 60px auto;
+  padding: 25px 30px;
+  border-radius: 12px;
+  width: 400px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  color: #002b5c;
+  position: relative;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 20px;
+  color: #888;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+  color: #002b5c;
+  text-decoration: none;
+}
+
+.modal-content h3 {
+  margin-top: 0;
+  font-weight: 700;
+  color: #003366;
+  margin-bottom: 15px;
+}
+
+.modal-content p {
+  margin: 10px 0;
+  font-size: 1rem;
+}
+
+.modal-content strong {
+  color: #002b5c;
+}
 /* ===============================
    Station 1 page styles
    =============================== */
