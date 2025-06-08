@@ -52,7 +52,7 @@ admin-dashboard.html (Admin Interface)
 -(Planned for implementation)
 -Suggested features:
 
-View all units across stations.
+
 Filter by status, station, or date.
 Export data (CSV/PDF).
 Manage user accounts.
