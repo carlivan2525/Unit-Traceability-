@@ -1,99 +1,215 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Admin Dashboard</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body id="admin-dashboard">
   <header>
     Admin Dashboard - All Stations Overview
     <button onclick="logout()" class="logout-btn">Logout</button>
   </header>
-  
+
   <div class="container">
     <h2>Station Overview</h2>
 
     <div class="stations-grid">
-      <div class="station-box active">
+      <div class="station-box active" 
+           data-units-inprogress="12" data-units-tested="30" data-units-completed="58">
         <h3>Station 1 - PCB Pairing</h3>
         <p>Status: <span class="status-active">Active</span></p>
       </div>
 
-      <div class="station-box active">
+      <div class="station-box active" 
+           data-units-inprogress="10" data-units-tested="25" data-units-completed="60">
         <h3>Station 2 - Integrated Board Test</h3>
         <p>Status: <span class="status-active">Active</span></p>
       </div>
 
-      <div class="station-box active">
+      <div class="station-box active" 
+           data-units-inprogress="8" data-units-tested="20" data-units-completed="70">
         <h3>Station 3 - Main Board Conformal Coating</h3>
         <p>Status: <span class="status-active">Active</span></p>
       </div>
 
-      <div class="station-box active">
+      <div class="station-box active" 
+           data-units-inprogress="5" data-units-tested="15" data-units-completed="80">
         <h3>Station 4 - RTV Application</h3>
         <p>Status: <span class="status-active">Active</span></p>
       </div>
 
-      <div class="station-box active">
+      <div class="station-box active" 
+           data-units-inprogress="7" data-units-tested="18" data-units-completed="75">
         <h3>Station 5 - Casing/Harnessing</h3>
         <p>Status: <span class="status-active">Active</span></p>
       </div>
 
-      <div class="station-box active">
+      <div class="station-box active" 
+           data-units-inprogress="6" data-units-tested="22" data-units-completed="70">
         <h3>Station 6 - Complete Unit Test/Calibration</h3>
         <p>Status: <span class="status-active">Active</span></p>
       </div>
 
-        <div class="station-box inactive">
+      <div class="station-box inactive" 
+           data-units-inprogress="0" data-units-tested="0" data-units-completed="0">
         <h3>Station 7 - Pre BI Hi-Pot Test</h3>
         <p>Status: <span class="status-inactive">Offline</span></p>
       </div>
 
-
-      <div class="station-box inactive">
+      <div class="station-box inactive" 
+           data-units-inprogress="0" data-units-tested="0" data-units-completed="0">
         <h3>Station 8 - Burn-In Testing</h3>
         <p>Status: <span class="status-inactive">Offline</span></p>
       </div>
 
-      <div class="station-box active">
+      <div class="station-box active" 
+           data-units-inprogress="9" data-units-tested="27" data-units-completed="64">
         <h3>Station 9 - Sealing</h3>
         <p>Status: <span class="status-active">Active</span></p>
       </div>
 
-      <div class="station-box active">
+      <div class="station-box active" 
+           data-units-inprogress="11" data-units-tested="29" data-units-completed="60">
         <h3>Station 10 - Post BI Hi-Pot Test</h3>
         <p>Status: <span class="status-active">Active</span></p>
       </div>
 
-      <div class="station-box active">
+      <div class="station-box active" 
+           data-units-inprogress="15" data-units-tested="40" data-units-completed="50">
         <h3>Station 11 - Final Functional/Connectivity Test</h3>
         <p>Status: <span class="status-active">Active</span></p>
       </div>
 
-      <div class="station-box active">
+      <div class="station-box active" 
+           data-units-inprogress="14" data-units-tested="35" data-units-completed="55">
         <h3>Station 12 - Label Sticker Attachment</h3>
         <p>Status: <span class="status-active">Active</span></p>
       </div>
 
-      <div class="station-box active">
+      <div class="station-box active" 
+           data-units-inprogress="13" data-units-tested="32" data-units-completed="57">
         <h3>Station 13 - FVI</h3>
         <p>Status: <span class="status-active">Active</span></p>
       </div>
 
-      <div class="station-box active">
+      <div class="station-box active" 
+           data-units-inprogress="10" data-units-tested="28" data-units-completed="61">
         <h3>Station 14 - Packing</h3>
         <p>Status: <span class="status-active">Active</span></p>
       </div>
 
-      <div class="station-box active">
+      <div class="station-box active" 
+           data-units-inprogress="8" data-units-tested="24" data-units-completed="65">
         <h3>Station 15 - QC Stamping</h3>
         <p>Status: <span class="status-active">Active</span></p>
       </div>
     </div>
   </div>
 
+  <!-- Modal -->
+  <div id="stationModal" class="modal">
+    <div class="modal-content">
+      <button id="modalCloseBtn" class="modal-close-btn">&times;</button>
+      <h2 id="modalStationName"></h2>
+      <p>Status: <strong><span id="modalStatus"></span></strong></p>
+
+      <section class="modal-stats">
+        <div class="stat-box in-progress">
+          <h3>Units In Progress</h3>
+          <p id="modalInProgress">0</p>
+        </div>
+        <div class="stat-box tested">
+          <h3>Units Tested</h3>
+          <p id="modalTested">0</p>
+        </div>
+        <div class="stat-box completed">
+          <h3>Units Completed</h3>
+          <p id="modalCompleted">0</p>
+        </div>
+      </section>
+
+      <section class="modal-unit-details">
+        <h3>Recent Units Details</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Unit ID</th>
+              <th>Model</th>
+              <th>Status</th>
+              <th>Last Updated</th>
+            </tr>
+          </thead>
+          <tbody id="modalUnitDetails"></tbody>
+        </table>
+      </section>
+    </div>
+  </div>
+
   <script>
+    const modal = document.getElementById('stationModal');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+    const modalStationName = document.getElementById('modalStationName');
+    const modalStatus = document.getElementById('modalStatus');
+    const modalInProgress = document.getElementById('modalInProgress');
+    const modalTested = document.getElementById('modalTested');
+    const modalCompleted = document.getElementById('modalCompleted');
+    const modalUnitDetails = document.getElementById('modalUnitDetails');
+
+    // Open modal on station-box click
+    document.querySelectorAll('.station-box').forEach(box => {
+      box.addEventListener('click', () => openModal(box));
+    });
+
+    // Close modal
+    modalCloseBtn.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+
+    // Close modal on outside click
+    window.addEventListener('click', e => {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+
+    function openModal(stationBox) {
+      const stationName = stationBox.querySelector('h3').textContent;
+      const statusText = stationBox.querySelector('p span').textContent;
+      const inProgress = stationBox.getAttribute('data-units-inprogress') || '0';
+      const tested = stationBox.getAttribute('data-units-tested') || '0';
+      const completed = stationBox.getAttribute('data-units-completed') || '0';
+
+      modalStationName.textContent = stationName;
+      modalStatus.textContent = statusText;
+      modalStatus.style.color = stationBox.classList.contains('active') ? '#28a745' : '#888';
+
+      modalInProgress.textContent = inProgress;
+      modalTested.textContent = tested;
+      modalCompleted.textContent = completed;
+
+      // Example data, replace with real data if available
+      const exampleUnits = [
+        { id: 'U12345', model: 'XYZ-100', status: 'In Progress', updated: '2025-06-07 09:30' },
+        { id: 'U12346', model: 'XYZ-100', status: 'Tested', updated: '2025-06-07 08:45' },
+        { id: 'U12347', model: 'XYZ-100', status: 'Completed', updated: '2025-06-06 17:20' }
+      ];
+
+      modalUnitDetails.innerHTML = '';
+      exampleUnits.forEach(unit => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${unit.id}</td>
+          <td>${unit.model}</td>
+          <td>${unit.status}</td>
+          <td>${unit.updated}</td>
+        `;
+        modalUnitDetails.appendChild(tr);
+      });
+
+      modal.style.display = 'block';
+    }
+
     function logout() {
       window.location.href = 'index.html'; // redirect to login page on logout
     }
