@@ -15,6 +15,77 @@ Data and authentication are handled by Firebase; app is deployed on Vercel.
 | **Operator** | `operator@mkff.com` | `operator123` |
 These are stored in Firebase Authentication and should be manually created in your Firebase Console → Authentication → Users.
 
+🔑 Features by Page
+index.html (Login Page)
+
+-Users select their role and enter email/password.
+
+  Firebase Authentication validates credentials.
+
+-Redirects users based on their role:
+
+  operator@mkff.com → station1.html
+  admin@mkff.com → admin-dashboard.html
+
+Displays an error message for invalid credentials.
+
+station1.html (Operator Interface)
+-Interface for adding and editing unit data.
+
+  Fields: Unit ID, Model, Status, Remarks.
+  Buttons: Submit, Save Changes, Cancel Edit.
+
+-Displays:
+
+  Submitted units in a table (editable).
+  Unit activity history.
+  Account log history (e.g., login, add/edit timestamps).
+
+-Includes a Logout button to return to login.
+-Integrated with Firebase Realtime Database:
+
+  Loads unit list on page load.
+  Saves new or edited units under the units/ node.
+
+admin-dashboard.html (Admin Interface)
+-(Planned for implementation)
+-Suggested features:
+
+View all units across stations.
+Filter by status, station, or date.
+Export data (CSV/PDF).
+Manage user accounts.
+
+ -Firebase Integration
+Authentication: Firebase Email/Password Auth is used to log in as either an admin or operator.
+Realtime Database: All unit data is stored and retrieved from Firebase under the units/ path.
+
+// Sample database rules for development
+{
+  "rules": {
+    ".read": true,
+    ".write": true
+  }
+}
+
+
+Firebase is initialized in all HTML files using the following SDKs:
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+🌐 Hosting
+The project is hosted on Vercel, connected via GitHub.
+Updates are automatically deployed when changes are pushed to the repository.
+
+🚀 Technologies Used
+
+Frontend: HTML, CSS, JavaScript
+Backend/Database: Firebase Realtime Database
+Authentication: Firebase Auth (Email/Password)
+Hosting: Vercel
+
 
 
 Group Members:
