@@ -1,1 +1,125 @@
-development process docu 
+📘 Unit Traceability System
+
+1. Project Overview
+A web-based traceability system for PCB pairing (Station 1), with two user roles:
+
+-Operator – inputs and edits unit data.
+
+-Admin – manages/oversees operations (dashboard still in development).
+
+Data and authentication are handled by Firebase; app is deployed on Vercel.
+
+| Role         | Email               | Password      |
+| ------------ | ------------------- | ------------- |
+| **Admin**    | `admin@mkff.com`    | `admin123`    |
+| **Operator** | `operator@mkff.com` | `operator123` |
+These are stored in Firebase Authentication and should be manually created in your Firebase Console → Authentication → Users.
+
+3. Features by Page
+index.html (Login Page)
+-Select Role, enter Email & Password.
+-JavaScript checks credentials via Firebase Auth.
+-Redirects:
+
+  -Operator → station1.html
+  -Admin → admin-dashboard.html
+-Invalid credentials show an error message.
+
+station1.html (Operator Interface)
+-Form to Add or Edit unit:
+
+  -Fields: Unit ID, Model, Status, Remarks.
+  -Buttons: Submit / Save Changes, Cancel Edit
+
+-Displays:
+
+  -Submitted units in a table (editable)
+  -Unit activity history
+  -Account history log (e.g., login, add, edit timestamps)
+
+-Logout button to return to login page.
+
+-Firebase integration:
+
+  -oads unit list from Realtime Database on page load.
+
+  -Writes new or edited units to units/ node.
+
+admin-dashboard.html (Admin Interface)
+(To be implemented)
+
+-Suggested additions:
+
+  -Display all units across stations
+
+  -Filter units by status, station, or date
+
+  -Export data (CSV/PDF)
+
+Manage user accounts
+
+
+4. Firebase Setup
+a. Authentication
+Enable Email/Password provider.
+
+Manually add the two example users.
+
+b. Realtime Database
+Initial rules (development phase):
+
+{
+  "rules": {
+    ".read": true,
+    ".write": true
+  }
+}
+
+Store unit data under path: units/{autoId}
+
+c. Firebase Integration in Code
+In your HTML files, include:
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+Initialize Firebase:
+
+const firebaseConfig = { /* your config here */ };
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.database();
+
+5. Vercel Hosting
+
+-Connect your GitHub repository to Vercel.
+-Set build configuration (e.g., public folder).
+-Deploy project—your live app URL appears in Vercel.
+-To update, push changes to GitHub; Vercel auto-deploys.
+
+6. Suggested Next Enhancements
+
+| Feature                         | Description                                                 |
+| ------------------------------- | ----------------------------------------------------------- |
+| **Admin Dashboard**             | View, filter, export unit data                              |
+| **Authentication Guards**       | Redirect unauthorized users away from sensitive pages       |
+| **User Session Handling**       | Store login in local/session storage                        |
+| **Firestore Upgrade**           | Move from Realtime Database for more powerful queries       |
+| **UI Improvements**             | Better styling, mobile responsiveness                       |
+| **Validation & Error Handling** | Input validation, user notifications, robust error handling |
+| **Security Rules**              | Restrict DB access to authenticated users only              |
+| **Analytics**                   | Track user activity and unit processing stats               |
+| **Unit Deletion**               | Allow admins to delete entries                              |
+
+7. Documentation & Usage
+
+-Clone the repo, run locally (npx serve, etc.).
+-Configure Firebase: replace firebaseConfig; enable Auth / Database.
+-Add users in Firebase Auth.
+-Deploy to Vercel or test locally.
+-Log in as admin/operator.
+-Test submitting and editing units — verify data in Firebase Console → Realtime Database.
+
+
+
